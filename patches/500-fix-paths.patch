@@ -1,0 +1,67 @@
+--- a/src/dns_client.c
++++ b/src/dns_client.c
+@@ -988,8 +988,8 @@ static int _dns_client_set_trusted_cert(SSL_CTX *ssl_ctx)
+ 
+ 		const STACK_OF(X509_NAME) *cas = SSL_CTX_get_client_CA_list(ssl_ctx);
+ 		if (cas && sk_X509_NAME_num(cas) == 0) {
+-			cafile = "/etc/ssl/certs/ca-certificates.crt";
+-			capath = "/etc/ssl/certs";
++			cafile = "/opt/etc/ssl/certs/ca-certificates.crt";
++			capath = "/opt/etc/ssl/certs";
+ 			cert_path_set = 0;
+ 		}
+ 	}
+--- a/src/dns_conf.h
++++ b/src/dns_conf.h
+@@ -63,12 +63,12 @@ extern "C" {
+ #define DNS_DEFAULT_CHECKPOINT_TIME (3600 * 24)
+ #define MAX_INTERFACE_LEN 16
+ 
+-#define SMARTDNS_CONF_FILE "/etc/smartdns/smartdns.conf"
+-#define SMARTDNS_LOG_FILE "/var/log/smartdns/smartdns.log"
+-#define SMARTDNS_AUDIT_FILE "/var/log/smartdns/smartdns-audit.log"
+-#define SMARTDNS_CACHE_FILE "/var/cache/smartdns/smartdns.cache"
+-#define SMARTDNS_TMP_CACHE_FILE "/tmp/smartdns.cache"
+-#define SMARTDNS_DEBUG_DIR "/tmp/smartdns"
++#define SMARTDNS_CONF_FILE "/opt/etc/smartdns/smartdns.conf"
++#define SMARTDNS_LOG_FILE "/opt/var/log/smartdns/smartdns.log"
++#define SMARTDNS_AUDIT_FILE "/opt/var/log/smartdns/smartdns-audit.log"
++#define SMARTDNS_CACHE_FILE "/opt/var/cache/smartdns/smartdns.cache"
++#define SMARTDNS_TMP_CACHE_FILE "/opt/tmp/smartdns.cache"
++#define SMARTDNS_DEBUG_DIR "/opt/tmp/smartdns"
+ #define DNS_RESOLV_FILE "/etc/resolv.conf"
+ 
+ enum domain_rule {
+--- a/src/smartdns.c
++++ b/src/smartdns.c
+@@ -53,8 +53,8 @@
+ #include <ucontext.h>
+ 
+ #define MAX_KEY_LEN 64
+-#define SMARTDNS_PID_FILE "/run/smartdns.pid"
+-#define SMARTDNS_LEGACY_PID_FILE "/var/run/smartdns.pid"
++#define SMARTDNS_PID_FILE "/opt/var/run/smartdns.pid"
++#define SMARTDNS_LEGACY_PID_FILE "/opt/var/run/smartdns.pid"
+ #define TMP_BUFF_LEN_32 32
+ #define SMARTDNS_CRASH_CODE 254
+ 
+@@ -1051,7 +1051,7 @@ int main(int argc, char *argv[])
+ 
+ 	safe_strncpy(config_file, SMARTDNS_CONF_FILE, MAX_LINE_LEN);
+ 
+-	if (stat("/run", &sb) == 0 && S_ISDIR(sb.st_mode)) {
++	if (stat("/opt/var/run", &sb) == 0 && S_ISDIR(sb.st_mode)) {
+ 		safe_strncpy(pid_file, SMARTDNS_PID_FILE, MAX_LINE_LEN);
+ 	} else {
+ 		safe_strncpy(pid_file, SMARTDNS_LEGACY_PID_FILE, MAX_LINE_LEN);
+--- a/src/tlog.c
++++ b/src/tlog.c
+@@ -1881,7 +1881,7 @@ static void _tlog_get_gzip_cmd_path(void)
+     char *save_ptr = NULL;
+ 
+     if (env_path == NULL) {
+-        env_path = "/bin:/usr/bin:/usr/local/bin";
++        env_path = "/opt/bin:/opt/sbin:/opt/usr/bin:/bin:/usr/bin:/usr/local/bin";
+     }
+ 
+     copy_path = strdup(env_path);

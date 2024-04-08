@@ -1,0 +1,74 @@
+diff --git a/etc/smartdns/smartdns.conf b/etc/smartdns/smartdns.conf
+index b68d7ff..cc5a860 100644
+--- a/etc/smartdns/smartdns.conf
++++ b/etc/smartdns/smartdns.conf
+@@ -77,7 +77,7 @@ bind [::]:53
+ # cache-persist no
+ 
+ # cache persist file
+-# cache-file /tmp/smartdns.cache
++# cache-file /opt/tmp/smartdns.cache
+ 
+ # cache persist time
+ # cache-checkpoint-time [second]
+@@ -177,7 +177,7 @@ force-qtype-SOA 65
+ # log-num: number of logs, 0 means disable log
+ log-level info
+ 
+-# log-file /var/log/smartdns/smartdns.log
++# log-file /opt/var/log/smartdns/smartdns.log
+ # log-size 128k
+ # log-num 2
+ # log-file-mode [mode]: file mode of log file.
+@@ -187,7 +187,7 @@ log-level info
+ # audit-enable yes
+ # audit-SOA [yes|no]: enable or disable log soa result.
+ # audit-size size of each audit file, support k,m,g
+-# audit-file /var/log/smartdns-audit.log
++# audit-file /opt/var/log/smartdns-audit.log
+ # audit-console [yes|no]: output audit log to console.
+ # audit-syslog [yes|no]: output audit log to syslog.
+ # audit-file-mode [mode]: file mode of audit file.
+@@ -195,15 +195,15 @@ log-level info
+ # audit-num 2
+ 
+ # Support reading dnsmasq dhcp file to resolve local hostname
+-# dnsmasq-lease-file /var/lib/misc/dnsmasq.leases
++# dnsmasq-lease-file /opt/var/lib/misc/dnsmasq.leases
+ 
+ # certificate file
+ # ca-file [file]
+-# ca-file /etc/ssl/certs/ca-certificates.crt
++# ca-file /opt/etc/ssl/certs/ca-certificates.crt
+ 
+ # certificate path
+ # ca-path [path]
+-# ca-path /etc/ss/certs
++# ca-path /opt/etc/ssl/certs
+ 
+ # remote udp dns server list
+ # server [IP]:[PORT]|URL [-blacklist-ip] [-whitelist-ip] [-check-edns] [-group [group] ...] [-exclude-default-group]
+@@ -366,7 +366,7 @@ log-level info
+ #   [-f] -file [path/to/set]: file path of domain set
+ # 
+ # example:
+-# domain-set -name domain-list -type list -file /etc/smartdns/domain-list.conf
++# domain-set -name domain-list -type list -file /opt/etc/smartdns/domain-list.conf
+ # address /domain-set:domain-list/1.2.3.4
+ # nameserver /domain-set:domain-list/server-group
+ # ipset /domain-set:domain-list/ipset
+@@ -389,7 +389,7 @@ log-level info
+ #   [-f] -file [path/to/set]: file path of ip set
+ # 
+ # example:
+-# ip-set -name ip-list -file /etc/smartdns/ip-list.conf
++# ip-set -name ip-list -file /opt/etc/smartdns/ip-list.conf
+ # bogus-nxdomain ip-set:ip-list
+ # ip-alias ip-set:ip-list 1.2.3.4
+ # ip-alias ip-set:ip-list ip-set:ip-map-list
+@@ -405,4 +405,4 @@ log-level info
+ 
+ # load plugin
+ # plugin [path/to/file] [args]
+-# plugin /usr/lib/smartdns/libsmartdns-ui.so --p 8080 -i 0.0.0.0 -r /usr/share/smartdns/wwwroot
++# plugin /var/usr/lib/smartdns/libsmartdns-ui.so --p 8080 -i 0.0.0.0 -r /opt/usr/share/smartdns/wwwroot
